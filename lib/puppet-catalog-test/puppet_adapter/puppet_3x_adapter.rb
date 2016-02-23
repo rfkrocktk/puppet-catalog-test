@@ -38,15 +38,8 @@ module PuppetCatalogTest
     end
 
     def compile(node)
-      begin
-        Puppet::Test::TestHelper.before_each_test
-        catalog = Puppet::Parser::Compiler.compile(node)
-        validate_relationships(catalog)
-      rescue => e
-        raise e
-      ensure
-        Puppet::Test::TestHelper.after_each_test
-      end
+      catalog = Puppet::Parser::Compiler.compile(node)
+      validate_relationships(catalog)
     end
 
     def create_node(hostname, facts)
@@ -84,6 +77,7 @@ module PuppetCatalogTest
         matching_resource = catalog.resources.find do |resource|
           resource.type == value.type &&
             (resource.title == value.title ||
+             resource[:name] == value.title ||
              resource[:alias] == value.title)
         end
 
