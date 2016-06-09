@@ -40,6 +40,7 @@ module PuppetCatalogTest
           puppet_config[:hiera_config] = File.join(@config_dir, @hiera_config)
         else
           puppet_config[:hiera_config] = File.join(@config_dir, "hiera.yaml")
+        end
       end
 
       pct = TestRunner.new(puppet_config)
